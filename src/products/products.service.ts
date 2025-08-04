@@ -6,17 +6,31 @@ import { DatabaseService } from 'src/database/database.service';
 export class ProductsService {
   constructor(private readonly databaseService: DatabaseService) {}
   async create(createProductDto: Prisma.ProductCreateInput) {
-    return this.databaseService.product.create({ data: createProductDto });
+    return this.databaseService.product.create({
+      data: createProductDto,
+      include: { image: true, tags: true, reviews: true },
+    });
   }
 
   async findAll() {
-    return this.databaseService.product.findMany({});
+    return this.databaseService.product.findMany({
+      include: {
+        image: true,
+        tags: true,
+        reviews: true,
+      },
+    });
   }
 
   async findOne(id: number) {
     return this.databaseService.product.findUnique({
       where: {
         id,
+      },
+      include: {
+        image: true,
+        tags: true,
+        reviews: true,
       },
     });
   }
@@ -27,6 +41,11 @@ export class ProductsService {
         id,
       },
       data: updateProductDto,
+      include: {
+        image: true,
+        tags: true,
+        reviews: true,
+      },
     });
   }
 
