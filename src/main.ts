@@ -19,7 +19,10 @@ async function bootstrap() {
       'https://github.com/cisse410',
       'quoifaireavec@gmail.com',
     )
-    .setLicense('MIT', 'http://localhost:3001')
+    .setLicense(
+      'MIT',
+      'https://github.com/cisse410/nestjs-prisma/blob/master/LICENSE.md',
+    )
     .setVersion('1.0')
     .build();
   const swaggerCustomOptions: SwaggerCustomOptions = {
