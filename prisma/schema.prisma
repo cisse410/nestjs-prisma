@@ -32,7 +32,7 @@ model Image {
   id        Int     @id @default(autoincrement())
   url       String
   product   Product @relation(fields: [productId], references: [id])
-  productId Int     
+  productId Int
 }
 
 model Review {
@@ -41,13 +41,40 @@ model Review {
   content   String
   rating    Int
   product   Product @relation(fields: [productId], references: [id])
-  productId Int     
+  productId Int
 }
 
 model Tag {
   id       Int       @id @default(autoincrement())
   content  String
   products Product[]
+}
+
+model User {
+  id              Int            @id @default(autoincrement())
+  email           String         @unique
+  password        String
+  first_name      String?
+  last_name       String?
+  bio             String?
+  phone_number    String?
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+  refreshTokens   RefreshToken[]
+
+  @@map("users")
+}
+
+model RefreshToken {
+  id        Int      @id @default(autoincrement())
+  token     String   @unique
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  revokedAt DateTime?
+
+  @@map("refresh_tokens")
 }
 
 enum Availibility {
